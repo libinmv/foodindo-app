@@ -50,13 +50,13 @@ async def register_user(user_id: str) -> Response:
     is_added: int = await redis.sadd('members', user_id)
     _: int = await redis.sadd('validator', user_id)
     qr_code_path: str = f"media/{user_id}.png"
-    qr_code_file_path: str = f"http://127.0.0.1:8000/{qr_code_path}"
+    qr_code_file_path: str = f"http://foodindo.onrender.com/{qr_code_path}"
     if exists(qr_code_path):
         return {
         "data": f"{user_id} registered",
         "qr_code_url": qr_code_file_path
     }
-    qr_code_url: str = f"http://127.0.0.1:8000/user/{user_id}/validate"
+    qr_code_url: str = f"https://foodindo.onrender.com/user/{user_id}/validate"
     qr_code: pyqrcode = pyqrcode.create(qr_code_url)
     qr_code.png(qr_code_path, scale = 6)
     if not is_added:

@@ -61,7 +61,7 @@ async def register_user(user_id: str) -> Response:
             },
             status_code=400)
     return {
-        "data": "{user_id} registered",
+        "data": f"{user_id} registered",
         "qr_code_url": qr_code_file_path
     }
 

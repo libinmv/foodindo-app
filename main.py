@@ -6,6 +6,7 @@ and validation for Entri Office Lunch
 import pyqrcode
 from fastapi import FastAPI, Response
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 import aioredis
 
 app = FastAPI()
@@ -14,11 +15,13 @@ class Config():
     """
     The default redis URL
     """
-    redis_url: str = 'redis://127.0.0.1:6379'
+    redis_url: str = 'redis://red-ch880ausi8uhth5le8c0:6379'
 
 config = Config()
 app = FastAPI(title='FastAPI Redis Tutorial')
 redis = aioredis.from_url(config.redis_url, decode_responses=True)
+app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/media", StaticFiles(directory="media"), name="media")
 
 @app.get("/")
 async def root() -> Response:
@@ -47,7 +50,7 @@ async def register_user(user_id: str) -> Response:
     _: int = await redis.sadd('validator', user_id)
     qr_code_url: str = f"http://127.0.0.1:8000/user/{user_id}/validate"
     qr_code: pyqrcode = pyqrcode.create(qr_code_url)
-    qr_code_path: str = f"/media/lunch_qr_{user_id}.png"
+    qr_code_path: str = f"media/{user_id}.png"
     qr_code.png(qr_code_path, scale = 6)
     qr_code_file_path: str = f"http://127.0.0.1:8000/{qr_code_path}"
     if not is_added:

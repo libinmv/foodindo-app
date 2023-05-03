@@ -2,9 +2,8 @@
 Foodindo App helps to automate lunch registration
 and validation for Entri Office Lunch
 """
-
-import pyqrcode
 from os.path import exists
+import pyqrcode
 from fastapi import FastAPI, Response
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles

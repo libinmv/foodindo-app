@@ -52,9 +52,9 @@ async def register_user(user_id: str) -> Response:
     qr_code_file_path: str = f"http://foodindo.onrender.com/{qr_code_path}"
     if exists(qr_code_path):
         return {
-        "data": f"{user_id} registered",
-        "qr_code_url": qr_code_file_path
-    }
+            "data": f"{user_id} registered",
+            "qr_code_url": qr_code_file_path
+        }
     qr_code_url: str = f"https://foodindo.onrender.com/user/{user_id}/validate"
     qr_code: pyqrcode = pyqrcode.create(qr_code_url)
     qr_code.png(qr_code_path, scale = 6)
@@ -95,6 +95,8 @@ async def total_registrations() -> Response:
     for a day
     """
     total_count: int = await redis.scard('members')
+    members: dict = await redis.smembers('members')
     return {
-        'total_count': total_count
+        'total_count': total_count,
+        'members': members
     }

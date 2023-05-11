@@ -31,23 +31,6 @@ REDIS_URL: str = os.getenv("REDIS_URL")
 HOST: str = os.getenv("HOST")
 redis = aioredis.from_url(REDIS_URL, decode_responses=True)
 
-@app.get("/")
-async def root() -> JSONResponse:
-    """
-    Index Page
-    """
-    user_ids: list = [1,2,3]
-    removed: bool = bool(await redis.delete('test'))
-    response: int = await redis.sadd('test', *user_ids)
-    value: list = await redis.smembers('test')
-    count: int = await redis.scard('test')
-    return {
-        "message": value,
-        "count": count,
-        "response": response,
-        "is_removed": removed
-    }
-
 @router.get("/user/{user_id}/register")
 async def register_user(user_id: str) -> JSONResponse:
     """

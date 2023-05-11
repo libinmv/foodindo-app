@@ -44,3 +44,12 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 app.mount("/media", StaticFiles(directory="media"), name="media")
 
 app.include_router(api_v1_router, prefix='/api/v1')
+
+@app.get("/")
+async def root():
+    """
+    Index Page
+    """
+    return {
+        "message": "Hello World!"
+    }

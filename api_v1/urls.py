@@ -6,24 +6,11 @@ import os
 from os.path import exists
 from dotenv import load_dotenv
 import pyqrcode
-from fastapi import FastAPI, APIRouter
+from fastapi import APIRouter
 from fastapi.responses import JSONResponse
-from starlette.middleware.cors import CORSMiddleware
 import aioredis
 
 load_dotenv(".env")
-
-app = FastAPI()
-
-origins = ["*"]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 router = APIRouter()
 

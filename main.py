@@ -13,6 +13,8 @@ from api_v1.urls import router as api_v1_router
 
 load_dotenv(".env")
 
+ORIGINS = os.getenv("ORIGINS")
+
 environment = os.getenv("ENVIRONMENT")
 print(os.getcwd(), environment)
 if environment == 'PROD':
@@ -21,6 +23,14 @@ if environment == 'PROD':
         docs_url=None,
         redoc_url=None,
         openapi_url=None
+    )
+
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins= ORIGINS,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"]
     )
 
 elif environment == 'DEV':

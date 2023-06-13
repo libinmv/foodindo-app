@@ -9,7 +9,7 @@ from fastapi.staticfiles import StaticFiles
 from starlette.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 
-from api_v1.urls import router as api_v1_router
+from api_v1.views import router as api_v1_router
 
 load_dotenv(".env")
 
